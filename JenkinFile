@@ -1,5 +1,12 @@
 pipeline{
 	agent any
+	stages {
+        stage('Build') { 
+            steps {
+                sh 'mvn -B -DskipTests clean package' 
+            }
+        }
+    }
 	post{
 	always{
 	emailext body: 'Test', subject: 'TEst', to: 'vjvignesh4@gmail.com'
