@@ -3,7 +3,7 @@ pipeline{
 	stages {
         stage('Build') { 
             steps {
-                bat 'java src\main\java\com\training\jenkin\JenkinTraining.java' 
+                bat 'java src/main/java/com/training/jenkin/JenkinTraining.java' 
             }
         }
     }
