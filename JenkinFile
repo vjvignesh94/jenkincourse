@@ -1,0 +1,8 @@
+pipeline{
+	agent jenkin
+	post{
+	always{
+	emailext body: 'Test', subject: 'TEst', to: 'vjvignesh4@gmail.com'
+	}
+	}
+}
