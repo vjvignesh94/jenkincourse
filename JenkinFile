@@ -1,5 +1,5 @@
 pipeline{
-	agent jenkin
+	agent any
 	post{
 	always{
 	emailext body: 'Test', subject: 'TEst', to: 'vjvignesh4@gmail.com'
