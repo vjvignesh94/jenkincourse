@@ -7,7 +7,7 @@ pipeline{
             }
         }
         stage('Analyse Code') { 
-            node {
+            steps {
               withSonarQubeEnv('My SonarQube Server') {
                  bat 'mvn sonar:sonar -Dsonar.projectKey=Jenkin -Dsonar.host.url=http://localhost:9002 -Dsonar.login=1772e6adec39f020e1828482b8c0a1dda31fe773'
               }
