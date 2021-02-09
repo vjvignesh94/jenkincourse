@@ -15,7 +15,8 @@ pipeline{
               }
           }
         }
-        stage('Quality Gate'){    
+        stage('Quality Gate'){  
+        steps {  
               timeout(time: 1, unit: 'HOURS') 
               {
     				def qg = waitForQualityGate() 
@@ -25,6 +26,7 @@ pipeline{
         					mail bcc: '', body: 'Build Failed', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	
     					}
   				}
+  			}
       	}
       	stage('SendReport')
       	{
