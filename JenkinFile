@@ -11,7 +11,7 @@ pipeline{
         stage('Analyse Code') { 
             steps {
               withSonarQubeEnv('MySonarQubeServer') {
-                 bat 'mvn sonar:sonar -Dsonar.projectKey=Jenkin -Dsonar.host.url=http://localhost:9002 -Dsonar.login=1772e6adec39f020e1828482b8c0a1dda31fe773'
+                 bat 'mvn sonar:sonar -Dsonar.projectKey=Jenkin -Dsonar.host.url=http://B2ML30358:9002 -Dsonar.login=293c9647bd93b16811b11fe71bdb4ce1c3369a64'
               }
           }
         }
