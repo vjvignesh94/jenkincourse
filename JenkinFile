@@ -33,15 +33,9 @@ pipeline{
       	}
       	stage('SendReport')
       	{
-      		steps {
-    		post
-			{
-				always
-				{
+      		steps {  
 					mail bcc: '', body: 'Build Success', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	
 				}
-			}
-			}
 		}
 	}
 }
