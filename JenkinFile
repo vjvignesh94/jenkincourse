@@ -1,15 +1,36 @@
 pipeline{
 	agent any
 	stages {
-        stage('Build') { 
+        stage('Build and Test') { 
             steps {
-                sh 'mvn clean install' 
+                bat 'mvn clean install' 
             }
         }
-    }
-	post{
-	always{
-	mail bcc: '', body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-Check console output at $BUILD_URL to view the results.''', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	}
+        stage('Analyse Code') { 
+            node {
+              withSonarQubeEnv('My SonarQube Server') {
+                 bat 'mvn sonar:sonar -Dsonar.projectKey=Jenkin -Dsonar.host.url=http://localhost:9002 -Dsonar.login=1772e6adec39f020e1828482b8c0a1dda31fe773'
+              }
+          }
+        }
+        stage("Quality Gate"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      	}
+    	stage('Send Report')
+    	{
+			post
+			{
+				always
+				{
+					mail bcc: '', body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+					Check console output at $BUILD_URL to view the results.''', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	
+				}
+			}
+		}
 	}
 }
