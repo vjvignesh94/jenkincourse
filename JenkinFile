@@ -18,8 +18,12 @@ pipeline{
         stage('Quality Gate'){
          steps {
               timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: false
-              }
+    			def qg = waitForQualityGate() 
+    			if (qg.status != 'OK') {
+        				error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        				mail bcc: '', body: 'Build Failed', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	
+    				}
+  				}
             }
       	}
       	stage('SendReport')
@@ -29,8 +33,7 @@ pipeline{
 			{
 				always
 				{
-					mail bcc: '', body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-					Check console output at $BUILD_URL to view the results.''', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	
+					mail bcc: '', body: 'Build Success', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vjvignesh4@gmail.com'	
 				}
 			}
 			}
