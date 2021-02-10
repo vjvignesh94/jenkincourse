@@ -43,7 +43,7 @@ pipeline{
         				"files": [
           						{
             					"pattern": "target/*.jar",
-            					"target": "artifactory-build-info/QA/"
+            					"target": "example-repo-local/QA/"
           						}]
       					}"""
       				server.upload spec: uploadSpec, buildInfo: buildInfo
