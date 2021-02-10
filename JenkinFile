@@ -60,10 +60,9 @@ pipeline{
       				def downloadSpec = """{
  						"files": [
   								{
-      							"pattern": "example-repo-local/QA/*.zip",
+      							"pattern": "example-repo-local/QA/*.jar",
       							"target": "downloadFromArtifactory/"
-    							}
- 								]
+    							}]
 						}"""
 				  server.download spec: downloadSpec
       			}
