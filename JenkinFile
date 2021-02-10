@@ -52,6 +52,23 @@ pipeline{
       			}
       		}
       	}
+      	stage('Download From Artifactory')
+      	{
+      		steps{
+      			script{
+      				def server = Artifactory.server "art-1"
+      				def downloadSpec = """{
+ 						"files": [
+  								{
+      							"pattern": "example-repo-local/QA/*.zip",
+      							"target": "downloadFromArtifactory/"
+    							}
+ 								]
+						}"""
+				  server.download spec: downloadSpec
+      			}
+      		}
+      	}
       	stage('SendReport')
       	{
       		steps {  
