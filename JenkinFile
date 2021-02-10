@@ -42,7 +42,7 @@ pipeline{
       				def uploadSpec = """{
         				"files": [
           						{
-            					"pattern": "**/target/*.jar",
+            					"pattern": "**/target/maven-simple-0.2-SNAPSHOT.jar",
             					"target": "example-repo-local"
           						}]
       					}"""
